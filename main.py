@@ -8,6 +8,12 @@ load_dotenv('.env')
 
 openai.api_key=os.getenv('OPENAI_API_KEY')
 
+
+st.set_page_config(
+    page_title="CatBot GPT",
+    page_icon="🐱",
+)
+
 def generate_response(prompt):
     st.session_state['messages'].append({"role": "user", "content":prompt})
     response = openai.ChatCompletion.create(
@@ -23,7 +29,7 @@ def clear():
 st.title('😺🤖CatBot GPT')
 st.write('Supported by BythjulSkruvat⭐⭐⭐⭐⭐')
 
-st.sidebar.title('😺🤖Welcome')
+st.sidebar.success('select a page above.')
 st.sidebar.write("""
     ###### 21-03-2023
     ##### Yes it is now have a session history, so the bot is able to recall previous chat. and some improvement 👍 

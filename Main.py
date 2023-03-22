@@ -29,15 +29,10 @@ def clear_text():
 st.title('😺🤖CatBot GPT')
 st.write('Supported by BythjulSkruvat⭐⭐⭐⭐⭐')
 
-st.sidebar.success('select a page above.')
-st.sidebar.write("""
-    ###### 21-03-2023
-    ##### Yes it is now have a session history, so the bot is able to recall previous chat. and some improvement 👍 
-    ###### 20-03-2023 
-    ##### This CatBot (read: Chat Bot) utilizes the advanced GPT 3-5 Turbo model. At present, chat history is not saved, meaning the bot will not be able to recall previous conversations. Therefore, each time you initiate a chat, the bot will not remember what you have previously written.  
-    ##### Anyway, feel free to use it when ChatGPT is unavailable, it's pretty often now 😜 
-    ##### Todo: Add ability to upload file or document for ex: csv file
-""")
+st.sidebar.write('''
+ ##### This CatBot (read: Chat Bot) utilizes the advanced GPT 3-5 Turbo model
+ ##### Anyway, feel free to use it when ChatGPT is unavailable, it's pretty often now 😜
+''')
 
 if 'temp' not in st.session_state:
     st.session_state['temp'] = ""

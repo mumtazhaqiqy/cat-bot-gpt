@@ -1,30 +1,30 @@
-import openai
+import gpt
 import streamlit as st
 from streamlit_chat import message
-import os
-from dotenv import load_dotenv
-
-load_dotenv('.env')
-
-openai.api_key=os.getenv('OPENAI_API_KEY')
-
 
 st.set_page_config(
     page_title="CatBot GPT",
     page_icon="🐱",
 )
 
-def generate_response(prompt):
-    st.session_state['messages'].append({"role": "user", "content":prompt})
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=st.session_state['messages']
-    )
-    message = response.choices[0].message.content
-    return message
-
 def clear():
     st.session_state.clear()
+
+def clear_text():
+    st.session_state["temp"] = st.session_state["input"]
+    
+    if st.session_state["input"]:
+        if(st.session_state["input"] != 'clear'):
+            output=gpt.sendPrompt(st.session_state["input"], st.session_state['messages'])
+            if(len(st.session_state['messages'])>=6):
+                st.session_state['messages'] = st.session_state['messages'][-5:]
+            #store the output
+            st.session_state['past'].append(st.session_state["input"])
+            st.session_state['generated'].append(output)
+            # st.session_state['messages'].append({"role": "assistant", "content":output})
+        else:
+            clear()
+    st.session_state["input"] = ""
 
 st.title('😺🤖CatBot GPT')
 st.write('Supported by BythjulSkruvat⭐⭐⭐⭐⭐')
@@ -41,22 +41,6 @@ st.sidebar.write("""
 
 if 'temp' not in st.session_state:
     st.session_state['temp'] = ""
-
-def clear_text():
-    st.session_state["temp"] = st.session_state["input"]
-    
-    if st.session_state["input"]:
-        if(st.session_state["input"] != 'clear'):
-            output=generate_response(st.session_state["input"])
-            if(len(st.session_state['messages'])>=6):
-                st.session_state['messages'] = st.session_state['messages'][-5:]
-            #store the output
-            st.session_state['past'].append(st.session_state["input"])
-            st.session_state['generated'].append(output)
-            st.session_state['messages'].append({"role": "assistant", "content":output})
-        else:
-            clear()
-    st.session_state["input"] = ""
 
 user_input=st.text_area("😺🤖: Hey hooman, write your command here:", key='input', on_change=clear_text)
 st.button('🗑️ clear history', key='clear', on_click=clear)
